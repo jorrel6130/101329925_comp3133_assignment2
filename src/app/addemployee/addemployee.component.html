@@ -1,1 +1,27 @@
-<p>addemployee works!</p>
+<form [formGroup]="form" (ngSubmit)="addEmployee()">
+    <label for="first_name"> First Name </label>
+    <input type="text" id="first_name" formControlName="first_name">
+    <br>
+    <label for="last_name"> Last Name </label>
+    <input type="text" id="last_name" formControlName="last_name">
+    <br>
+    <label for="email"> Email </label>
+    <input type="text" id="email" formControlName="email">
+    <br>
+    <label for="gender"> Gender </label>
+    <input type="text" id="gender" formControlName="gender">
+    <br>
+    <label for="designation"> Designation </label>
+    <input type="text" id="designation" formControlName="designation">
+    <br>
+    <label for="salary"> Salary </label>
+    <input type="number" step="0.01" id="salary" formControlName="salary">
+    <br>
+    <label for="doj"> Date Joined </label>
+    <input type="date" id="doj" formControlName="doj">
+    <br>
+    <label for="department"> Department </label>
+    <input type="text" id="department" formControlName="department">
+    <br>
+    <button type="submit">Add</button>
+</form>

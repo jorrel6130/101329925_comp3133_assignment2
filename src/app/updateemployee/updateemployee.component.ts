@@ -93,8 +93,9 @@ export class UpdateemployeeComponent implements OnInit {
       if(salary) {
         mutation += `salary: ${salary}, `
       }
-      const doj = new Date(this.form.value.doj)
-      if(doj) {
+      if(this.form.value.doj) {
+        const doj = new Date(this.form.value.doj)
+        console.log(this.form.value.doj)
         mutation += `date_of_joining: "${doj}", `
       }
       const department = this.form.value.department
