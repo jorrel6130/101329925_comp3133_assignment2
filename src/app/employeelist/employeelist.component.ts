@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Apollo } from 'apollo-angular';
 import { GET_ALL } from '../graphql/graphql.queries';
+import { Employee } from '../models/employee';
 
 @Component({
   selector: 'app-employeelist',
@@ -10,7 +11,7 @@ import { GET_ALL } from '../graphql/graphql.queries';
 })
 export class EmployeelistComponent implements OnInit {
   
-  employees: any[] = [];
+  employees: Employee[] = [];
   loading = true;
   error: any;
   
