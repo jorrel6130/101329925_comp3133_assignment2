@@ -1,1 +1,38 @@
-<p>updateemployee works!</p>
+@if (loading) {
+<div>Loading...</div>
+}
+@if (error) {
+<div>Error</div>
+}
+@if (employee) {
+    <form [formGroup]="form" (ngSubmit)="updateEmployee()">
+        <label for="first_name"> First Name </label>
+        <input type="text" placeholder="{{ employee.first_name }}" id="first_name" formControlName="first_name">
+        <br>
+        <label for="last_name"> Last Name </label>
+        <input type="text" placeholder="{{ employee.last_name }}" id="last_name" formControlName="last_name">
+        <br>
+        <label for="email"> Email </label>
+        <input type="text" placeholder="{{ employee.email }}" id="email" formControlName="email">
+        <br>
+        <label for="gender"> Gender </label>
+        <input type="text" placeholder="{{ employee.gender }}" id="gender" formControlName="gender">
+        <br>
+        <label for="designation"> Designation </label>
+        <input type="text" placeholder="{{ employee.designation }}" id="designation" formControlName="designation">
+        <br>
+        <label for="salary"> Salary </label>
+        <input type="number" placeholder="{{ employee.salary }}" step="0.01" id="salary" formControlName="salary">
+        <br>
+        <label for="doj"> Date Joined </label>
+        <input type="date" id="doj" formControlName="doj">
+        <br>
+        <label for="department"> Department </label>
+        <input type="text" placeholder="{{ employee.department }}" id="department" formControlName="department">
+        <br>
+        <label for="photo"> Employee Photo Link </label>
+        <input type="text" placeholder="{{ employee.employee_photo }}" id="photo" formControlName="photo">
+        <br>
+        <button type="submit">Update</button>
+    </form>
+}

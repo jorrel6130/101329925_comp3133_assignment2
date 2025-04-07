@@ -28,4 +28,8 @@ export class EmployeelistComponent implements OnInit {
     })
   }
 
+  deleteEmployee(id: any) {
+    throw new Error('Method not implemented.');
+  }
+
 }

@@ -12,6 +12,7 @@
               <th>Name</th>
               <th>Department</th>
               <th>Designation</th>
+              <th colspan="3">Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -20,9 +21,28 @@
                         <td>{{ employee.last_name }}, {{ employee.first_name }}</td>
                         <td>{{ employee.department }}</td>
                         <td>{{ employee.designation }}</td>
-                        <td><a href="/employee/view/{{ employee._id }}">Details</a></td>
+                        <td>
+                            <form action="/employee/view/{{ employee._id }}">
+                              <input type="submit" value="View"/>
+                            </form>
+                        </td>
+                        <td>
+                          <form action="/employee/update/{{ employee._id }}">
+                            <input type="submit" value="Update" />
+                          </form>
+                        </td>
+                        <td>
+                          <button (click)="deleteEmployee(employee._id)">Delete</button>
+                        </td>
                 </tr>
             }
+              <tr>
+                <td>
+                  <form action="/employee/add">
+                    <input type="submit" value="Add" />
+                  </form>
+                </td>
+              </tr>
           </tbody>
     </table>
   }
