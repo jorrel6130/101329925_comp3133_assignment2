@@ -13,7 +13,7 @@ export const appConfig: ApplicationConfig = {
 
       return {
         link: httpLink.create({
-          uri: '<%= endpoint %>',
+          uri: 'https://101329925-comp-3133-101329925-assignment1.vercel.app/graphql',
         }),
         cache: new InMemoryCache(),
       };
