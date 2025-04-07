@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, ReactiveFormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Apollo, gql } from 'apollo-angular';
 
 @Component({
@@ -12,7 +13,7 @@ export class AddemployeeComponent implements OnInit{
 
   form: any;
 
-  constructor(private readonly apollo: Apollo, private formBuilder: FormBuilder) {}
+  constructor(private readonly apollo: Apollo, private formBuilder: FormBuilder, private router: Router) {}
 
   ngOnInit(): void {
     this.form = this.formBuilder.group({
@@ -77,7 +78,9 @@ export class AddemployeeComponent implements OnInit{
               }
             }
           `
-        }).subscribe()
+        }).subscribe((result: any) => {
+          this.router.navigateByUrl(`/employee/view/${result.data?.addEmployee._id}`)
+        })
       }
     }
 

@@ -46,6 +46,13 @@
                 <th>Profile Update On</th>
                 <td>{{ updated }}</td>
             </tr>
+            <tr>
+                <td>
+                    <form action="/employee/update/{{ employee._id }}">
+                        <input type="submit" value="Update" />
+                    </form>
+                </td>
+            </tr>
           </tbody>
     </table>
   }

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Apollo, gql } from 'apollo-angular';
 import { FormBuilder, Validator, ReactiveFormsModule, FormControl } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Employee } from '../models/employee';
 import { formatDate } from '@angular/common';
 
@@ -20,7 +20,7 @@ export class UpdateemployeeComponent implements OnInit {
   id: any;
   doj: string = '';
 
-  constructor(private readonly apollo: Apollo, private formBuilder: FormBuilder, private route: ActivatedRoute) {}
+  constructor(private readonly apollo: Apollo, private formBuilder: FormBuilder, private route: ActivatedRoute, private router: Router) {}
 
   ngOnInit(): void {
 
@@ -115,7 +115,9 @@ export class UpdateemployeeComponent implements OnInit {
             }
           }
         `
-      }).subscribe()
+      }).subscribe((result: any) => {
+        this.router.navigateByUrl(`/employee/view/${result.data?.updateEmployee._id}`)
+      })
     }
   }
 
