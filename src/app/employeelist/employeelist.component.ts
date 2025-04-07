@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Employee } from '../models/employee';
-import { Apollo, gql } from 'apollo-angular';
-import { resolveObjMapThunk } from 'graphql';
+import { Apollo } from 'apollo-angular';
 import { GET_ALL } from '../graphql/graphql.queries';
 
 @Component({

@@ -6,7 +6,24 @@
     <div>Error</div>
   }
   @if (employees) {
-    @for (employee of employees; track $index) {
-      <p>{{ employee.first_name }}: {{ employee.last_name }}</p>
-    }
+    <h2>Employee List</h2>
+    <table>
+        <thead>
+            <tr>
+              <th>Name</th>
+              <th>Department</th>
+              <th>Designation</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (employee of employees; track $index) {
+                <tr>
+                        <td>{{ employee.last_name }}, {{ employee.first_name }}</td>
+                        <td>{{ employee.department }}</td>
+                        <td>{{ employee.designation }}</td>
+                        <td>Details</td>
+                </tr>
+            }
+          </tbody>
+    </table>
   }
