@@ -6,6 +6,19 @@
   }
   @if (employees) {
     <h2>Employee List</h2>
+    <form [formGroup]="form" (ngSubmit)="search()">
+      <label for="desOrDep">Search By Designation Or Department</label>
+      <br>
+      <select id="desOrDep" formControlName="desOrDep">
+        <option value="designation">Designation</option>
+        <option value="department">Department</option>
+      </select>
+      <input type="text" id="name" formControlName="name" placeholder="Name of designation or department">
+      <button type="submit">Search</button>
+      <form action="/employee">
+        <input type="submit" value="Reset" />
+      </form>
+  </form>
     <table>
         <thead>
             <tr>
