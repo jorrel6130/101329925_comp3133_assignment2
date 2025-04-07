@@ -1,1 +1,51 @@
-<p>viewemployee works!</p>
+@if (loading) {
+    <div>Loading...</div>
+  }
+  @if (error) {
+    <div>Error</div>
+  }
+  @if (employee) {
+    <h2>{{ employee.first_name }} {{ employee.last_name }}</h2>
+    <img src="{{ employee.employee_photo }}" alt="Employee Photo" height="100"/>
+    <table>
+        <thead>
+            <tr>
+              <th>Employee Details</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+                <th>Email</th>
+                <td>{{ employee.email }}</td>
+            </tr>
+            <tr>
+                <th>Gender</th>
+                <td>{{ employee.gender }}</td>
+            </tr>
+            <tr>
+                <th>Designation</th>
+                <td>{{ employee.designation }}</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>{{ employee.email }}</td>
+            </tr>
+            <tr>
+                <th>Salary</th>
+                <td>${{ employee.salary }} per month</td>
+            </tr>
+            <tr>
+                <th>Date Joined</th>
+                <td>{{ doj }}</td>
+            </tr>
+            <tr>
+                <th>Profile Created On</th>
+                <td>{{ created }}</td>
+            </tr>
+            <tr>
+                <th>Profile Update On</th>
+                <td>{{ updated }}</td>
+            </tr>
+          </tbody>
+    </table>
+  }
