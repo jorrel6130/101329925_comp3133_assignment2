@@ -3,6 +3,7 @@ import { Employee } from '../models/employee';
 import { Apollo, gql } from 'apollo-angular';
 import { ActivatedRoute } from '@angular/router';
 import { formatDate } from '@angular/common';
+import { EmployeeApiService } from '../network/employee-api.service';
 
 @Component({
   selector: 'app-viewemployee',
@@ -20,7 +21,7 @@ export class ViewemployeeComponent implements OnInit {
   created: any;
   updated: any;
   
-  constructor(private readonly apollo: Apollo, private route: ActivatedRoute) {}
+  constructor(private readonly apollo: Apollo, private route: ActivatedRoute, private employeeApi: EmployeeApiService) {}
 
   ngOnInit(): void {
     
@@ -28,27 +29,26 @@ export class ViewemployeeComponent implements OnInit {
       this.id = value["id"]
     })
 
-    this.apollo
-    .watchQuery({
-      query: gql`
-        query GetEmployee {
-            searchById(_id:"${this.id}") {
-              _id
-              first_name
-              last_name
-              email
-              gender
-              designation
-              salary
-              date_of_joining
-              department
-              employee_photo
-              created_at
-              updated_at
-            }
-          }
-        `
-    }).valueChanges.subscribe((result: any) => {
+    const query = gql`
+    query GetEmployee {
+        searchById(_id:"${this.id}") {
+          _id
+          first_name
+          last_name
+          email
+          gender
+          designation
+          salary
+          date_of_joining
+          department
+          employee_photo
+          created_at
+          updated_at
+        }
+      }
+    `
+
+    this.employeeApi.employeeQuery(query).subscribe((result: any) => {
       this.employee = result.data?.searchById
       this.loading = result.loading
       this.error = result.error

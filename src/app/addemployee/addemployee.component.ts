@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Apollo, gql } from 'apollo-angular';
+import { EmployeeApiService } from '../network/employee-api.service';
 
 @Component({
   selector: 'app-addemployee',
@@ -13,7 +14,7 @@ export class AddemployeeComponent implements OnInit{
 
   form: any;
 
-  constructor(private readonly apollo: Apollo, private formBuilder: FormBuilder, private router: Router) {}
+  constructor(private readonly apollo: Apollo, private formBuilder: FormBuilder, private router: Router, private employeeApi: EmployeeApiService) {}
 
   ngOnInit(): void {
     this.form = this.formBuilder.group({
@@ -70,15 +71,14 @@ export class AddemployeeComponent implements OnInit{
           mutation += `employee_photo: "${photo}", `
         }
         console.log(mutation)
-        this.apollo.mutate({
-          mutation: gql`
-            mutation {
-              addEmployee: addEmp(${mutation}) {
-                _id
-              }
+        const apiInput = gql`
+          mutation {
+            addEmployee: addEmp(${mutation}) {
+              _id
             }
-          `
-        }).subscribe((result: any) => {
+          }
+        `
+        this.employeeApi.employeeMutation(apiInput).subscribe((result: any) => {
           this.router.navigateByUrl(`/employee/view/${result.data?.addEmployee._id}`)
         })
       }

@@ -4,6 +4,7 @@ import { GET_ALL } from '../graphql/graphql.queries';
 import { Employee } from '../models/employee';
 import { FormBuilder, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { EmployeeApiService } from '../network/employee-api.service';
 
 @Component({
   selector: 'app-employeelist',
@@ -20,7 +21,7 @@ export class EmployeelistComponent implements OnInit {
   desOrDep: any;
   name: any;
 
-  constructor(private readonly apollo: Apollo, private formBuilder: FormBuilder, private router: Router, private route: ActivatedRoute) { }
+  constructor(private readonly apollo: Apollo, private formBuilder: FormBuilder, private router: Router, private route: ActivatedRoute, private employeeApi: EmployeeApiService) { }
 
   ngOnInit(): void {
     this.form = this.formBuilder.group({
@@ -31,30 +32,25 @@ export class EmployeelistComponent implements OnInit {
     this.desOrDep = this.route.snapshot.queryParamMap.get('desordep')
     this.name = this.route.snapshot.queryParamMap.get('name')
 
+    const query = gql`
+      query{
+        getAll: searchByDesOrDep(option: "${this.desOrDep}", query: "${this.name}") {
+          _id
+          first_name
+          last_name
+          designation
+          department
+        }
+      }
+    `
     if (this.name) {
-      this.apollo
-        .watchQuery({
-          query: gql`
-          query{
-            getAll: searchByDesOrDep(option: "${this.desOrDep}", query: "${this.name}") {
-              _id
-              first_name
-              last_name
-              designation
-              department
-            }
-          }
-        `
-        }).valueChanges.subscribe((result: any) => {
+      this.employeeApi.employeeQuery(query).subscribe((result: any) => {
           this.employees = result.data?.getAll
           this.loading = result.loading
           this.error = result.error
         })
     } else {
-      this.apollo
-        .watchQuery({
-          query: GET_ALL
-        }).valueChanges.subscribe((result: any) => {
+      this.employeeApi.employeeQuery(GET_ALL).subscribe((result: any) => {
           this.employees = result.data?.getAll
           this.loading = result.loading
           this.error = result.error
@@ -63,13 +59,12 @@ export class EmployeelistComponent implements OnInit {
   }
 
   deleteEmployee(id: any) {
-    this.apollo.mutate({
-      mutation: gql`
-                mutation {
-                  deleteEmployee: delEmp(_id: "${id}")
-                }
-              `
-    }).subscribe((result: any) => {
+    const mutation = gql`
+      mutation {
+        deleteEmployee: delEmp(_id: "${id}")
+      }
+    `
+    this.employeeApi.employeeMutation(mutation).subscribe((result: any) => {
       alert(`Employee ID ${id} successfully deleted`)
       window.location.reload()
     })
@@ -81,9 +76,7 @@ export class EmployeelistComponent implements OnInit {
       this.name = this.form.value.name
       if (this.name) {
         this.router.navigateByUrl(`/employee?desordep=${this.desOrDep}&name=${this.name}`)
-        this.apollo
-        .watchQuery({
-          query: gql`
+        const query = gql`
           query{
             getAll: searchByDesOrDep(option: "${this.desOrDep}", query: "${this.name}") {
               _id
@@ -94,7 +87,7 @@ export class EmployeelistComponent implements OnInit {
             }
           }
         `
-        }).valueChanges.subscribe((result: any) => {
+        this.employeeApi.employeeQuery(query).subscribe((result: any) => {
           this.employees = result.data?.getAll
           this.loading = result.loading
           this.error = result.error

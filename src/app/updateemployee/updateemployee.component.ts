@@ -4,6 +4,7 @@ import { FormBuilder, Validator, ReactiveFormsModule, FormControl } from '@angul
 import { ActivatedRoute, Router } from '@angular/router';
 import { Employee } from '../models/employee';
 import { formatDate } from '@angular/common';
+import { EmployeeApiService } from '../network/employee-api.service';
 
 @Component({
   selector: 'app-updateemployee',
@@ -20,7 +21,7 @@ export class UpdateemployeeComponent implements OnInit {
   id: any;
   doj: string = '';
 
-  constructor(private readonly apollo: Apollo, private formBuilder: FormBuilder, private route: ActivatedRoute, private router: Router) {}
+  constructor(private readonly apollo: Apollo, private formBuilder: FormBuilder, private route: ActivatedRoute, private router: Router, private employeeApi: EmployeeApiService) {}
 
   ngOnInit(): void {
 
@@ -28,25 +29,24 @@ export class UpdateemployeeComponent implements OnInit {
       this.id = value["id"]
     })
 
-    this.apollo
-    .watchQuery({
-      query: gql`
-        query GetEmployee {
-            searchById(_id:"${this.id}") {
-              _id
-              first_name
-              last_name
-              email
-              gender
-              designation
-              salary
-              date_of_joining
-              department
-              employee_photo
-            }
-          }
-        `
-    }).valueChanges.subscribe((result: any) => {
+    const query = gql`
+    query GetEmployee {
+        searchById(_id:"${this.id}") {
+          _id
+          first_name
+          last_name
+          email
+          gender
+          designation
+          salary
+          date_of_joining
+          department
+          employee_photo
+        }
+      }
+    `
+    
+    this.employeeApi.employeeQuery(query).subscribe((result: any) => {
       this.employee = result.data?.searchById
       this.loading = result.loading
       this.error = result.error
@@ -106,16 +106,14 @@ export class UpdateemployeeComponent implements OnInit {
       if(photo) {
         mutation += `employee_photo: "${photo}", `
       }
-      console.log(mutation)
-      this.apollo.mutate({
-        mutation: gql`
-          mutation {
-            updateEmployee: updEmp(${mutation}) {
-              _id
-            }
+      const apiInput = gql`
+      mutation {
+          updateEmployee: updEmp(${mutation}) {
+            _id
           }
-        `
-      }).subscribe((result: any) => {
+        }
+      `
+      this.employeeApi.employeeMutation(apiInput).subscribe((result: any) => {
         this.router.navigateByUrl(`/employee/view/${result.data?.updateEmployee._id}`)
       })
     }
