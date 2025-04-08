@@ -2,7 +2,8 @@
     <div>Loading...</div>
   }
   @if (error) {
-    <div>Error</div>
+    <h3>Failed to fetch list</h3>
+    <p>{{ error }}</p>
   }
   @if (employees) {
     <h2>Employee List</h2>

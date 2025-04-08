@@ -51,9 +51,9 @@ export class EmployeelistComponent implements OnInit {
         })
     } else {
       this.employeeApi.query(GET_ALL).subscribe((result: any) => {
+          this.error = JSON.stringify(result.errors)
           this.employees = result.data?.getAll
           this.loading = result.loading
-          this.error = result.error
         })
     }
   }

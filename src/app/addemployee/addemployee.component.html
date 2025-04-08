@@ -25,3 +25,8 @@
     <br>
     <button type="submit">Add</button>
 </form>
+
+@if (error) {
+    <h3>Add Operation Failed</h3>
+    <p>{{ error }}</p>
+}
