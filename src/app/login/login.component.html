@@ -5,7 +5,18 @@
     <label for="password"> Password </label>
     <input type="text" id="password" formControlName="password">
     <br>
-    <button type="submit">Login</button>
+    <table>
+        <tr>
+            <td>
+                <button type="submit">Login</button>
+            </td>
+            <td>
+                <form action="/signup">
+                    <input type="submit" value="Sign Up" />
+                </form>
+            </td>
+        </tr>
+    </table>
 </form>
 @if (loading) {
     <div>Loading...</div>

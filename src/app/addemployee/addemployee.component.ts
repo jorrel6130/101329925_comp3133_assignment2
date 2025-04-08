@@ -79,6 +79,7 @@ export class AddemployeeComponent implements OnInit{
             }
           `
         this.employeeApi.mutation(apiInput).subscribe((result: any) => {
+          alert(`Successfully added employee profile for ${first_name} ${last_name}`)
           this.router.navigateByUrl(`/employee/view/${result.data?.addEmployee._id}`)
         })
       }

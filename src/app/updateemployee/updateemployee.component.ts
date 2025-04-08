@@ -114,6 +114,7 @@ export class UpdateemployeeComponent implements OnInit {
         }
       `
       this.employeeApi.mutation(apiInput).subscribe((result: any) => {
+        alert("Profile updated!")
         this.router.navigateByUrl(`/employee/view/${result.data?.updateEmployee._id}`)
       })
     }

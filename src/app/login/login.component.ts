@@ -46,6 +46,7 @@ export class LoginComponent {
         this.error = result.error
         if (result.data?.login.username) {
           localStorage.setItem('token', this.username);
+          alert(`Successfully logged into user: ${this.username}`)
           this.router.navigateByUrl(`/${this.returnUrl}`)
         }
       })
