@@ -1,7 +1,16 @@
 <div>
   <h2>Employee Management App</h2>
-  <form action="/employee">
-    <input type="submit" value="Home" />
-  </form>
+  <table>
+    <tr>
+      <td>
+        <form action="/employee">
+          <input type="submit" value="Home" />
+        </form>
+      </td>
+      <td>
+        <button (click)="logout()">Logout</button>
+      </td>
+    </tr>
+  </table>
 </div>
 <router-outlet />
