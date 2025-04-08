@@ -13,6 +13,7 @@ import { EmployeeApiService } from '../network/employee-api.service';
 export class AddemployeeComponent implements OnInit{
 
   form: any;
+  error: any;
 
   constructor(private readonly apollo: Apollo, private formBuilder: FormBuilder, private router: Router, private employeeApi: EmployeeApiService) {}
 
@@ -70,14 +71,13 @@ export class AddemployeeComponent implements OnInit{
         if(photo) {
           mutation += `employee_photo: "${photo}", `
         }
-        console.log(mutation)
         const apiInput = gql`
-          mutation {
-            addEmployee: addEmp(${mutation}) {
-              _id
+            mutation {
+              addEmployee: addEmp(${mutation}) {
+                _id
+              }
             }
-          }
-        `
+          `
         this.employeeApi.employeeMutation(apiInput).subscribe((result: any) => {
           this.router.navigateByUrl(`/employee/view/${result.data?.addEmployee._id}`)
         })
