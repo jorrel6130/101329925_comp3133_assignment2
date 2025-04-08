@@ -9,13 +9,13 @@ export class EmployeeApiService {
 
   constructor(private readonly apollo: Apollo) { }
 
-  employeeQuery(query: any): Observable<any> {
+  query(query: any): Observable<any> {
     return this.apollo.watchQuery({
       query: query
     }).valueChanges
   }
 
-  employeeMutation(mutation: any): Observable<any> {
+  mutation(mutation: any): Observable<any> {
     return this.apollo.mutate({
       mutation: mutation
     })

@@ -48,7 +48,7 @@ export class ViewemployeeComponent implements OnInit {
       }
     `
 
-    this.employeeApi.employeeQuery(query).subscribe((result: any) => {
+    this.employeeApi.query(query).subscribe((result: any) => {
       this.employee = result.data?.searchById
       this.loading = result.loading
       this.error = result.error

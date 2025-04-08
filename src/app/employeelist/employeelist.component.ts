@@ -44,13 +44,13 @@ export class EmployeelistComponent implements OnInit {
       }
     `
     if (this.name) {
-      this.employeeApi.employeeQuery(query).subscribe((result: any) => {
+      this.employeeApi.query(query).subscribe((result: any) => {
           this.employees = result.data?.getAll
           this.loading = result.loading
           this.error = result.error
         })
     } else {
-      this.employeeApi.employeeQuery(GET_ALL).subscribe((result: any) => {
+      this.employeeApi.query(GET_ALL).subscribe((result: any) => {
           this.employees = result.data?.getAll
           this.loading = result.loading
           this.error = result.error
@@ -64,7 +64,7 @@ export class EmployeelistComponent implements OnInit {
         deleteEmployee: delEmp(_id: "${id}")
       }
     `
-    this.employeeApi.employeeMutation(mutation).subscribe((result: any) => {
+    this.employeeApi.mutation(mutation).subscribe((result: any) => {
       alert(`Employee ID ${id} successfully deleted`)
       window.location.reload()
     })
@@ -87,7 +87,7 @@ export class EmployeelistComponent implements OnInit {
             }
           }
         `
-        this.employeeApi.employeeQuery(query).subscribe((result: any) => {
+        this.employeeApi.query(query).subscribe((result: any) => {
           this.employees = result.data?.getAll
           this.loading = result.loading
           this.error = result.error

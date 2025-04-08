@@ -46,7 +46,7 @@ export class UpdateemployeeComponent implements OnInit {
       }
     `
     
-    this.employeeApi.employeeQuery(query).subscribe((result: any) => {
+    this.employeeApi.query(query).subscribe((result: any) => {
       this.employee = result.data?.searchById
       this.loading = result.loading
       this.error = result.error
@@ -113,7 +113,7 @@ export class UpdateemployeeComponent implements OnInit {
           }
         }
       `
-      this.employeeApi.employeeMutation(apiInput).subscribe((result: any) => {
+      this.employeeApi.mutation(apiInput).subscribe((result: any) => {
         this.router.navigateByUrl(`/employee/view/${result.data?.updateEmployee._id}`)
       })
     }

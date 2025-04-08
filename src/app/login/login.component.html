@@ -7,3 +7,10 @@
     <br>
     <button type="submit">Login</button>
 </form>
+@if (loading) {
+    <div>Loading...</div>
+}
+@if (error) {
+    <h3>Login Failed</h3>
+    <p>{{ error }}</p>
+}

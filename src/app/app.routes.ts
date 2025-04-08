@@ -5,6 +5,7 @@ import { AddemployeeComponent } from './addemployee/addemployee.component';
 import { UpdateemployeeComponent } from './updateemployee/updateemployee.component';
 import { ViewemployeeComponent } from './viewemployee/viewemployee.component';
 import { EmployeelistComponent } from './employeelist/employeelist.component';
+import { LoginGuard } from './login/login.guard';
 
 export const routes: Routes = [
     {
@@ -17,19 +18,31 @@ export const routes: Routes = [
     },
     {
         path: 'employee',
-        component: EmployeelistComponent
+        component: EmployeelistComponent,
+        canActivate: [
+            LoginGuard
+        ]
     },
     {
         path: 'employee/view/:id',
-        component: ViewemployeeComponent
+        component: ViewemployeeComponent,
+        canActivate: [
+            LoginGuard
+        ]
     },
     {
         path: 'employee/add',
-        component: AddemployeeComponent
+        component: AddemployeeComponent,
+        canActivate: [
+            LoginGuard
+        ]
     },
     {
         path: 'employee/update/:id',
-        component: UpdateemployeeComponent
+        component: UpdateemployeeComponent,
+        canActivate: [
+            LoginGuard
+        ]
     },
     {
         path: '**',
