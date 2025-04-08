@@ -28,21 +28,31 @@ export class SignupComponent {
 
   signup() {
     if (this.form?.valid) {
-      const username = this.form.value.username
-      const email = this.form.value.email
-      const password = this.form.value.password
-      let mutation = gql`
+      let mutation = ''
+        const username = this.form.value.username
+        if(username) {
+          mutation += `username: "${username}", `
+        }
+        const email = this.form.value.email
+        if(email) {
+          mutation += `email: "${email}", `
+        }
+        const password = this.form.value.password
+        if(password) {
+          mutation += `password: "${password}", `
+        }
+      const apiInput = gql`
         mutation {
-          signup: signup(username: "${username}", email: "${email}", password: "${password}"){
+          signup: signup(${mutation}){
               username
               email
               password
           }
         }
       `
-      this.employeeApi.mutation(mutation).subscribe((result: any) => {
+      this.employeeApi.mutation(apiInput).subscribe((result: any) => {
+        this.error = JSON.stringify(result.errors)
         this.loading = result.loading
-        this.error = result.error
         if (result.data?.signup) {
           alert(`Successfully created user ${result.data?.signup.username}!`)
           this.router.navigateByUrl('/login')

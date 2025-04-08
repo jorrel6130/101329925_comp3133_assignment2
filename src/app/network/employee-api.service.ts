@@ -11,13 +11,15 @@ export class EmployeeApiService {
 
   query(query: any): Observable<any> {
     return this.apollo.watchQuery({
-      query: query
+      query: query,
+      errorPolicy: 'all'
     }).valueChanges
   }
 
   mutation(mutation: any): Observable<any> {
     return this.apollo.mutate({
-      mutation: mutation
+      mutation: mutation,
+      errorPolicy: 'all'
     })
   }
 }

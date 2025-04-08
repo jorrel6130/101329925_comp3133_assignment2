@@ -41,9 +41,9 @@ export class LoginComponent {
         }
       `
       this.employeeApi.query(query).subscribe((result: any) => {
-        this.username = result.data?.login.username
         this.loading = result.loading
-        this.error = result.error
+        this.error = JSON.stringify(result.errors)
+        this.username = result.data?.login.username
         if (result.data?.login.username) {
           localStorage.setItem('token', this.username);
           alert(`Successfully logged into user: ${this.username}`)

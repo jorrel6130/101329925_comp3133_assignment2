@@ -2,7 +2,8 @@
 <div>Loading...</div>
 }
 @if (error) {
-<div>Error</div>
+<h3>Failed to fetch employee</h3>
+<p>{{ error }}</p>
 }
 @if (employee) {
     <form [formGroup]="form" (ngSubmit)="updateEmployee()">
@@ -35,4 +36,8 @@
         <br>
         <button type="submit">Update</button>
     </form>
+}
+@if (error) {
+    <h3>Failed to update profile</h3>
+    <p>{{ error }}</p>
 }

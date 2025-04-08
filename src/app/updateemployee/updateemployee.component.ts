@@ -18,6 +18,7 @@ export class UpdateemployeeComponent implements OnInit {
   employee: Employee | undefined;
   loading = true;
   error: any;
+  mutationError: any;
   id: any;
   doj: string = '';
 
@@ -47,9 +48,9 @@ export class UpdateemployeeComponent implements OnInit {
     `
     
     this.employeeApi.query(query).subscribe((result: any) => {
+      this.error = JSON.stringify(result.errors)
       this.employee = result.data?.searchById
       this.loading = result.loading
-      this.error = result.error
       this.doj = formatDate(this.employee!.date_of_joining!, 'yyyy-MM-dd', 'en-US')
     })
 
@@ -114,8 +115,13 @@ export class UpdateemployeeComponent implements OnInit {
         }
       `
       this.employeeApi.mutation(apiInput).subscribe((result: any) => {
-        alert("Profile updated!")
-        this.router.navigateByUrl(`/employee/view/${result.data?.updateEmployee._id}`)
+        this.mutationError = JSON.stringify(result.errors)
+        if(this.mutationError) {
+          alert(`Failed to update profile.\n${this.mutationError}`)
+        } else {
+          alert("Profile updated!")
+          this.router.navigateByUrl(`/employee/view/${result.data?.updateEmployee._id}`)
+        }
       })
     }
   }
